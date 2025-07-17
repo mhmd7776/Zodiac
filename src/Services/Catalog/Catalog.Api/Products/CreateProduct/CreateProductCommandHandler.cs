@@ -24,9 +24,9 @@ namespace Catalog.Api.Products.CreateProduct
 
     #region Handler
 
-    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+    internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
-        public Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
             // 1. create product entity from command object
             var product = new Product
@@ -39,9 +39,11 @@ namespace Catalog.Api.Products.CreateProduct
             };
 
             // 2. save product to db
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
 
             // 3. return CreateProductResult as result
-            return Task.FromResult(new CreateProductResult(Guid.NewGuid()));
+            return new CreateProductResult(product.Id);
         }
     }
 
