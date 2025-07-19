@@ -5,6 +5,7 @@ global using Marten;
 global using MediatR;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handlers;
+using Catalog.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.AddMarten(options =>
 {
     options.Connection(builder.Configuration.GetConnectionString("PostgreSQL") ?? string.Empty);
 }).UseLightweightSessions();
+
+if (builder.Environment.IsDevelopment())
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
