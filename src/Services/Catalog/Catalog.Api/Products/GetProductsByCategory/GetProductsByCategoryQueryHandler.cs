@@ -18,12 +18,10 @@ namespace Catalog.Api.Products.GetProductsByCategory
 
     #region Handler
 
-    internal class GetProductsByCategoryQueryHandler(IDocumentSession session, ILogger<GetProductsByCategoryQueryHandler> logger) : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
+    internal class GetProductsByCategoryQueryHandler(IDocumentSession session) : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
     {
         public async Task<GetProductsByCategoryResult> Handle(GetProductsByCategoryQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"GetProductsByCategoryQueryHandler.Handle called with: {query}");
-
             var products = await session.Query<Product>()
                 .Where(x => x.Categories.Contains(query.Category))
                 .ToListAsync(cancellationToken);

@@ -32,12 +32,10 @@ namespace Catalog.Api.Products.DeleteProduct
 
     #region Handler
 
-    internal class DeleteProductCommandHandler(IDocumentSession session, ILogger<DeleteProductCommandHandler> logger) : ICommandHandler<DeleteProductCommand>
+    internal class DeleteProductCommandHandler(IDocumentSession session) : ICommandHandler<DeleteProductCommand>
     {
         public async Task<Unit> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"DeleteProductCommandHandler.Handle called with: {command}");
-
             // get product by id
             var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
             if (product is null)

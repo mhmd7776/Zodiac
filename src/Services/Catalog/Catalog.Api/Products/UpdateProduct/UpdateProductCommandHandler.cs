@@ -45,12 +45,10 @@ namespace Catalog.Api.Products.UpdateProduct
 
     #region Handler
 
-    internal class UpdateProductCommandHandler(IDocumentSession session, ILogger<UpdateProductCommandHandler> logger) : ICommandHandler<UpdateProductCommand>
+    internal class UpdateProductCommandHandler(IDocumentSession session) : ICommandHandler<UpdateProductCommand>
     {
         public async Task<Unit> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"UpdateProductCommandHandler.Handle called with: {command}");
-
             // get product by id
             var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
             if (product is null)

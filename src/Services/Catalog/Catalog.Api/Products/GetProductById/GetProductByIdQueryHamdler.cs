@@ -19,12 +19,10 @@ namespace Catalog.Api.Products.GetProductById
 
     #region Handler
 
-    internal class GetProductByIdQueryHamdler(IDocumentSession session, ILogger<GetProductByIdQueryHamdler> logger) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
+    internal class GetProductByIdQueryHamdler(IDocumentSession session) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
     {
         public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"GetProductByIdQueryHamdler.Handle called with: {query}");
-
             var product = await session.LoadAsync<Product>(query.Id, cancellationToken);
             if (product == null)
                 throw new ProductNotFoundException(query.Id);
