@@ -22,6 +22,23 @@ namespace Catalog.Api.Products.CreateProduct
 
     #endregion
 
+    #region Validator
+
+    public class CreateProductValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Name is required")
+                .Length(2, 300).WithMessage("Name must be between 2 and 300 characters");
+
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+            RuleFor(x => x.Image).NotEmpty().WithMessage("Image is required");
+        }
+    };
+
+    #endregion
+
     #region Handler
 
     internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>

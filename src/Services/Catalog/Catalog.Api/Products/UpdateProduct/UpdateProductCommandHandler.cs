@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using Catalog.Api.Exceptions;
 using Catalog.Api.Models;
+using Catalog.Api.Products.CreateProduct;
 
 namespace Catalog.Api.Products.UpdateProduct
 {
@@ -21,6 +22,24 @@ namespace Catalog.Api.Products.UpdateProduct
     #region Result
 
     public record UpdateProductResult();
+
+    #endregion
+
+    #region Validator
+
+    public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
+    {
+        public UpdateProductValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Name is required")
+                .Length(2, 300).WithMessage("Name must be between 2 and 300 characters");
+
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+            RuleFor(x => x.Image).NotEmpty().WithMessage("Image is required");
+        }
+    };
 
     #endregion
 
