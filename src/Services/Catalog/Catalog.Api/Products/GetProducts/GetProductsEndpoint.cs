@@ -1,11 +1,11 @@
 ﻿using Catalog.Api.Models;
-using Catalog.Api.Products.CreateProduct;
+using Marten.Pagination;
 
 namespace Catalog.Api.Products.GetProducts
 {
     #region Request
 
-    public record GetProductsRequest();
+    public record GetProductsRequest(int? PageNumber = 1, int? PageSize = 10);
 
     #endregion
 
@@ -21,10 +21,10 @@ namespace Catalog.Api.Products.GetProducts
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/Products", async (ISender sender) =>
+            app.MapGet("/Products", async ([AsParameters] GetProductsRequest request, ISender sender) =>
             {
                 // map request to query
-                var query = new GetProductsQuery();
+                var query = request.Adapt<GetProductsQuery>();
 
                 // send query to handler and get result
                 var result = await sender.Send(query);

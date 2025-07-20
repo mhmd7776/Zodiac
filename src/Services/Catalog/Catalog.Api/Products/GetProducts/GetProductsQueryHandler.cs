@@ -1,11 +1,12 @@
 ﻿using BuildingBlocks.CQRS;
 using Catalog.Api.Models;
+using Marten.Pagination;
 
 namespace Catalog.Api.Products.GetProducts
 {
     #region Query
 
-    public record GetProductsQuery() : IQuery<GetProductsResult>;
+    public record GetProductsQuery(int PageNumber, int PageSize) : IQuery<GetProductsResult>;
 
     #endregion
 
@@ -21,7 +22,7 @@ namespace Catalog.Api.Products.GetProducts
     {
         public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
         {
-            var products = await session.Query<Product>().ToListAsync(cancellationToken);
+            var products = await session.Query<Product>().ToPagedListAsync(query.PageNumber, query.PageSize, cancellationToken);
             return new GetProductsResult(products);
         }
     }
