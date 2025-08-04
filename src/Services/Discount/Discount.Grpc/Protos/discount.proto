@@ -5,22 +5,27 @@ package discounts;
 option csharp_namespace = "Discount.Grpc.Protos";
 
 service DiscountProtoService {
+  rpc GetAllDiscounts (google.protobuf.Empty) returns (GetAllDiscountsResponse);
   rpc GetDiscount (GetDiscountRequest) returns (CouponModel);
   rpc CreateDiscount (CouponModel) returns (google.protobuf.Int32Value);
   rpc UpdateDiscount (CouponModel) returns (google.protobuf.BoolValue);
   rpc DeleteDiscount (DeleteDiscountRequest) returns (google.protobuf.Empty);
 }
 
+message GetAllDiscountsResponse {
+  repeated CouponModel coupons = 1;
+}
+
 message CouponModel {
   int32 id = 1;
-  string product_id = 2;
-  string description = 3;
+  string productId = 2;
+  google.protobuf.StringValue description = 3; // provide string?
   int32 amount = 4;
-  bool is_percentage = 5;
+  bool isPercentage = 5;
 }
 
 message GetDiscountRequest {
-  string product_id = 1;
+  string productId = 1;
 }
 
 message DeleteDiscountRequest {
