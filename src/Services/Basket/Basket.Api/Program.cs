@@ -7,6 +7,7 @@ using Basket.Api.Data;
 using Basket.Api.Models;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handlers;
+using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -38,6 +39,19 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"] ?? string.Empty);
+}).ConfigurePrimaryHttpMessageHandler(() => // Bypass certificate validation
+{
+    var httpMessageHandler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+
+    return httpMessageHandler;
+});
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("PostgreSQL") ?? string.Empty)
