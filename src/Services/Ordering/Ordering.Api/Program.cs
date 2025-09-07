@@ -1,6 +1,7 @@
 using Ordering.Api;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Infrastructure.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,5 +15,11 @@ builder.Services
 var app = builder.Build();
 
 app.UseApiServices();
+
+// initial db vs auto migration
+if (app.Environment.IsDevelopment())
+{
+    await app.InitialiseDbAsync();
+}
 
 app.Run();

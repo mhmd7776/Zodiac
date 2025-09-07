@@ -2,8 +2,6 @@
 using Ordering.Domain.Enums;
 using Ordering.Domain.Events;
 using Ordering.Domain.ValueObjects;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace Ordering.Domain.Models
 {

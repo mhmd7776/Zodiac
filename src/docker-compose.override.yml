@@ -23,6 +23,15 @@ services:
     volumes:
       - postgres.basket:/var/lib/postgresql/data/
 
+  order.db:
+    container_name: order.db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Bck[o14OPB8q
+    restart: always
+    ports:
+      - "1433:1433"
+
   distributed.cache:
     container_name: distributed.cache
     restart: always
