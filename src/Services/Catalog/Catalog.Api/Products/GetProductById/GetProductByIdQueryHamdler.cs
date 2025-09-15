@@ -1,7 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using Catalog.Api.Exceptions;
 using Catalog.Api.Models;
-using Catalog.Api.Products.GetProducts;
 
 namespace Catalog.Api.Products.GetProductById
 {

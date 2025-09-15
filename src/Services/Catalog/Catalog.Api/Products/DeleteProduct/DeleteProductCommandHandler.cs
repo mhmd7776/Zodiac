@@ -1,8 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using Catalog.Api.Exceptions;
 using Catalog.Api.Models;
-using Catalog.Api.Products.CreateProduct;
-using JasperFx.Events.Daemon;
 
 namespace Catalog.Api.Products.DeleteProduct
 {

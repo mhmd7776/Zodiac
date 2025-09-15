@@ -2,10 +2,10 @@
 {
     public record PaymentDto
     {
-        public string CardName { get; }
-        public string CardNumber { get; }
-        public string ExpirationDate { get; }
-        public string CVV2 { get; }
-        public string PaymentMethod { get; }
+        public string CardName { get; set; }
+        public string CardNumber { get; set; }
+        public string ExpirationDate { get; set; }
+        public string CVV2 { get; set; }
+        public string PaymentMethod { get; set; }
     }
 }

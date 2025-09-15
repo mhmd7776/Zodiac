@@ -2,13 +2,13 @@
 {
     public record AddressDto
     {
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Email { get; }
-        public string AddressLine { get; }
-        public string City { get; }
-        public string State { get; }
-        public string Country { get; }
-        public string ZipCode { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string AddressLine { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public string ZipCode { get; set; }
     }
 }
