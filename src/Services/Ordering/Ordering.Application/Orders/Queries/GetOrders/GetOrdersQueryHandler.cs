@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Ordering.Application.Data;
 using Ordering.Application.DTOs;
 using Ordering.Application.Extensions;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders.Queries.GetOrders
 {

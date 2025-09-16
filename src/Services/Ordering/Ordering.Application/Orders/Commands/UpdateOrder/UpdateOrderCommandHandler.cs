@@ -49,6 +49,10 @@ namespace Ordering.Application.Orders.Commands.UpdateOrder
             // update order
             UpdateOrder(order, command.OrderDto);
 
+            // save to db
+            dbContext.Orders.Update(order);
+            await dbContext.SaveChangesAsync(cancellationToken);
+
             // return result
             return Unit.Value;
         }

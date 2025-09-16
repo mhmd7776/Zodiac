@@ -43,7 +43,7 @@ namespace Ordering.Application.Orders.Commands.CreateOrder
             // 1. create order from command object
             var order = CreateOrder(command.OrderDto);
 
-            // 2. save product to db
+            // 2. save order to db
             await dbContext.Orders.AddAsync(order, cancellationToken);
             await dbContext.SaveChangesAsync(cancellationToken);
 
@@ -71,7 +71,7 @@ namespace Ordering.Application.Orders.Commands.CreateOrder
                 orderDto.Payment.PaymentMethod);
 
             var order = Order.Create(
-                OrderId.Of(orderDto.Id),
+                OrderId.Of(Guid.NewGuid()),
                 CustomerId.Of(orderDto.CustomerId),
                 address,
                 payment);
@@ -80,7 +80,7 @@ namespace Ordering.Application.Orders.Commands.CreateOrder
             foreach (var orderItem in orderDto.OrderItems)
             {
                 order.AddItem(
-                    ProductId.Of(orderItem.Id),
+                    ProductId.Of(orderItem.ProductId),
                     orderItem.Price,
                     orderItem.Quantity);
             }

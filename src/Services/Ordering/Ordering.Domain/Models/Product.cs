@@ -1,5 +1,4 @@
 ﻿using Ordering.Domain.Abstractions;
-using Ordering.Domain.Exceptions;
 using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Domain.Models
